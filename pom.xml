@@ -27,7 +27,9 @@
         <url/>
     </scm>
     <properties>
-        <java.version>17</java.version>
+        <java.version>17</java.version>  <!-- Java version you're using -->
+        <lombok.version>1.18.24</lombok.version>  <!-- Latest stable version of Lombok -->
+        <mapstruct.version>1.5.2.Final</mapstruct.version>  <!-- Latest stable version of MapStruct -->
     </properties>
     <dependencies>
         <dependency>
@@ -52,11 +54,29 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- Lombok Dependency -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>${lombok.version}</version> <!-- Lombok version comes from properties -->
+            <scope>provided</scope> <!-- Lombok is used at compile-time but not included in the packaged JAR -->
         </dependency>
+
+        <!-- MapStruct Dependency -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version> <!-- MapStruct version comes from properties -->
+        </dependency>
+
+        <!-- MapStruct Processor (for annotation processing) -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version> <!-- MapStruct processor version comes from properties -->
+            <scope>provided</scope> <!-- MapStruct processor is used for annotation processing at compile-time -->
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa-test</artifactId>
@@ -81,14 +101,19 @@
 
     <build>
         <plugins>
+            <!-- Maven Compiler Plugin (needed for annotation processing) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
                 <configuration>
+                    <source>${java.version}</source>  <!-- Use Java version defined in properties -->
+                    <target>${java.version}</target>  <!-- Use Java version defined in properties -->
                     <annotationProcessorPaths>
                         <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>  <!-- MapStruct processor version comes from properties -->
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
