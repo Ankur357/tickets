@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -16,12 +17,11 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class User {
 
     @Id
     @Column(name = "id", nullable = false, updatable = false)
-    private String id;
+    private UUID id;
 
     @Column(name = "name", nullable = false)
     private String name;
