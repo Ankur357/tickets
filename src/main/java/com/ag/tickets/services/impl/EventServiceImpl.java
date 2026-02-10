@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class EventServiceImpl extends EventService {
+public class EventServiceImpl implements EventService {
 
     private UserRepository userRepository;
 
