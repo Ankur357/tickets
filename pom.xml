@@ -118,6 +118,11 @@
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${mapstruct.version}</version>  <!-- MapStruct processor version comes from properties -->
                         </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>  <!-- Lombok processor version -->
+                        </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>

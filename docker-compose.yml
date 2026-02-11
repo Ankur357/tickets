@@ -1,13 +1,13 @@
 services:
-  db:
-    image: postgres:latest
-    ports:
-      - "5432:5432"
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydb
+#  db:
+#    image: postgres:latest
+#    ports:
+#      - "5433:5432"
+#    restart: always
+#    environment:
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#      POSTGRES_DB: tickets
 
   adminer:
     image: adminer:latest
