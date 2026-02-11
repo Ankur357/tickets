@@ -10,6 +10,8 @@ import com.ag.tickets.repository.UserRepository;
 import com.ag.tickets.services.EventService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,9 +21,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
 
     @Override
     @Transactional
@@ -55,5 +57,10 @@ public class EventServiceImpl implements EventService {
         eventToCreate.setTicketTypes(ticketTypesToCreate);
 
         return eventRepository.save(eventToCreate);
+    }
+
+    @Override
+    public Page<Event> listEventsForOrganizer(UUID organizerId, Pageable pageable) {
+        return eventRepository.findByOrganizerId(organizerId, pageable);
     }
 }
