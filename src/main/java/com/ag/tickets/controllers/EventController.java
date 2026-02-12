@@ -3,6 +3,7 @@ package com.ag.tickets.controllers;
 import com.ag.tickets.domain.CreateEventRequest;
 import com.ag.tickets.domain.dtos.CreateEventRequestDto;
 import com.ag.tickets.domain.dtos.CreateEventResponseDto;
+import com.ag.tickets.domain.dtos.GetEventDetailsResponseDto;
 import com.ag.tickets.domain.dtos.ListEventResponseDto;
 import com.ag.tickets.domain.entities.Event;
 import com.ag.tickets.mappers.EventMapper;
@@ -49,6 +50,18 @@ public class EventController {
         return ResponseEntity.ok(
                 events.map(eventMapper::toListEventResponseDto)
         );
+    }
+
+    @GetMapping(path = "/{eventId}")
+    public ResponseEntity<GetEventDetailsResponseDto> getEvent(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID eventId
+    ) {
+        UUID userId = parseUserId(jwt);
+        return eventService.getEventForOrganizer(userId, eventId)
+                .map(eventMapper::toGetEventDetailsResponseDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     public static UUID parseUserId(Jwt jwt) {
