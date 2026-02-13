@@ -23,10 +23,18 @@ public class PublishedEventController {
 
     @GetMapping
     public ResponseEntity<Page<ListPublishedEventResponseDto>> listPublishedEvents(
+            @RequestParam(required = false) String q,
             Pageable pageable) {
 
-        return ResponseEntity.ok(eventService.listPublishedEvents(pageable)
-                .map(eventMapper::toListPublishedEventResponseDto)
+        Page<Event> events;
+        if (null != q && !q.trim().isEmpty()) {
+            events = eventService.searchPublishedEvents(q, pageable);
+        } else {
+            events = eventService.listPublishedEvents(pageable);
+        }
+
+        return ResponseEntity.ok(
+                events.map(eventMapper::toListPublishedEventResponseDto)
         );
     }
 }
