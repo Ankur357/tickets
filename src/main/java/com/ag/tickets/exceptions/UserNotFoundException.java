@@ -1,6 +1,6 @@
 package com.ag.tickets.exceptions;
 
-public class UserNotFoundException extends RuntimeException{
+public class UserNotFoundException extends EventTicketException{
 
     public UserNotFoundException() {
     }
