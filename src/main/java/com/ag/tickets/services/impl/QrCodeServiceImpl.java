@@ -4,6 +4,7 @@ import com.ag.tickets.domain.entities.QrCode;
 import com.ag.tickets.domain.entities.QrCodeStatusEnum;
 import com.ag.tickets.domain.entities.Ticket;
 import com.ag.tickets.exceptions.QrCodeGenerationException;
+import com.ag.tickets.exceptions.QrCodeNotFoundException;
 import com.ag.tickets.repository.QrCodeRepository;
 import com.ag.tickets.services.QrCodeService;
 import com.google.zxing.BarcodeFormat;
@@ -49,6 +50,19 @@ public class QrCodeServiceImpl implements QrCodeService {
 
         } catch(IOException | WriterException ex) {
             throw new QrCodeGenerationException("Failed to generate QR Code", ex);
+        }
+    }
+
+    @Override
+    public byte[] getQrCodeImageForUserAndTicket(UUID userId, UUID ticketId) {
+        QrCode qrCode = qrCodeRepository.findByTicketIdAndTicketPurchaserId(ticketId, userId)
+                .orElseThrow(QrCodeNotFoundException::new);
+
+        try {
+            return Base64.getDecoder().decode(qrCode.getValue());
+        } catch(IllegalArgumentException ex) {
+            log.error("Invalid base64 QR Code for ticket ID: {}", ticketId, ex);
+            throw new QrCodeNotFoundException();
         }
     }
 

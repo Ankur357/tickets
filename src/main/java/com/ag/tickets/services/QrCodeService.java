@@ -9,6 +9,6 @@ public interface QrCodeService {
 
     QrCode generateQrCode(Ticket ticket);
 
-//    byte[] getQrCodeImageForUserAndTicket(UUID userId, UUID ticketId);
+    byte[] getQrCodeImageForUserAndTicket(UUID userId, UUID ticketId);
 
 }
