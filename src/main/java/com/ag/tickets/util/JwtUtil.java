@@ -1,4 +1,4 @@
-package com.ag.tickets;
+package com.ag.tickets.util;
 
 import java.util.UUID;
 import org.springframework.security.oauth2.jwt.Jwt;
